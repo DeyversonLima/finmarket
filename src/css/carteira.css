@@ -1,0 +1,213 @@
+/* ==========================================================================
+   ARQUIVO: carteira.css
+   ========================================================================== */
+
+/* Cabeçalho da Página */
+.page-header {
+  margin-bottom: 32px;
+}
+
+.page-title {
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--texto-principal);
+  margin-bottom: 8px;
+}
+
+.page-subtitle {
+  font-size: 1rem;
+  color: var(--texto-secundario);
+}
+
+/* 1. DASHBOARD DE ENTRADAS (GRID DE METRICAS) */
+.wallet-dashboard {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 24px;
+  margin-bottom: 48px;
+}
+
+.wallet-card {
+  background-color: var(--bg-card);
+  border: 1px solid var(--borda);
+  border-radius: 14px;
+  padding: 24px;
+  box-shadow: var(--shadow);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  position: relative;
+  overflow: hidden;
+}
+
+.wallet-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.wallet-card-label {
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: var(--texto-secundario);
+}
+
+/* Badges estilizados com variação sutil de azul/cinza */
+.wallet-card-badge {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  background-color: rgba(37, 99, 235, 0.1);
+  color: var(--color-primary);
+}
+
+.wallet-card-badge.secondary {
+  background-color: rgba(71, 85, 105, 0.1);
+  color: var(--texto-secundario);
+}
+
+.wallet-card-badge.accent {
+  background-color: rgba(16, 185, 129, 0.1);
+  color: var(--positive);
+}
+
+.wallet-card-value {
+  font-size: 2.25rem;
+  font-weight: 700;
+  color: var(--texto-principal);
+  letter-spacing: -0.5px;
+  margin-bottom: 12px;
+}
+
+.wallet-card-meta {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.875rem;
+  color: var(--texto-secundario);
+}
+
+/* Cores de Variação Cambial/Rendimento */
+.positive {
+  color: var(--positive);
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+}
+
+.text-muted {
+  color: var(--texto-secundario);
+  opacity: 0.85;
+}
+
+/* 2. SEÇÃO DE ATIVOS INVESTIDOS */
+.wallet-assets-section {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.wallet-assets-section .section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid var(--borda);
+  padding-bottom: 16px;
+}
+
+/* Botão de texto estilizado (+ Adicionar) */
+.btn-text {
+  background: none;
+  border: none;
+  color: var(--color-primary);
+  font-weight: 600;
+  font-size: 1rem;
+  cursor: pointer;
+  padding: 6px 12px;
+  border-radius: 6px;
+  transition: background-color 0.2s ease;
+}
+
+.btn-text:hover {
+  background-color: rgba(37, 99, 235, 0.08);
+}
+
+/* Grid/Lista onde o JavaScript vai injetar os itens da carteira */
+.wallet-assets-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+/* [Sugestão de classe estrutural para os cards injetados via JS] */
+.asset-item-card {
+  background-color: var(--bg-card);
+  border: 1px solid var(--borda);
+  border-radius: 12px;
+  padding: 16px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  box-shadow: var(--shadow);
+}
+
+/* 3. EMPTY STATE (Exibido quando não há investimentos) */
+.wallet-empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 64px 24px;
+  background-color: var(--bg-card);
+  border: 2px dashed var(--borda);
+  border-radius: 16px;
+  max-width: 600px;
+  margin: 24px auto;
+}
+
+.empty-icon {
+  color: var(--texto-secundario);
+  opacity: 0.5;
+  margin-bottom: 20px;
+  background-color: var(--bg-principal);
+  padding: 16px;
+  border-radius: 50%;
+  display: inline-flex;
+}
+
+.empty-title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--texto-principal);
+  margin-bottom: 8px;
+}
+
+.empty-description {
+  font-size: 0.95rem;
+  color: var(--texto-secundario);
+  margin-bottom: 24px;
+  max-width: 320px;
+}
+
+/* ==========================================================================
+   RESPONSIVIDADE (Mobile & Tablets)
+   ========================================================================== */
+@media (max-width: 768px) {
+  .wallet-card-value {
+    font-size: 1.85rem;
+  }
+  
+  .wallet-dashboard {
+    gap: 16px;
+  }
+  
+  .wallet-empty-state {
+    padding: 40px 16px;
+  }
+}

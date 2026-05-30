@@ -1,0 +1,225 @@
+/* ==========================================================================
+   ARQUIVO: ajuda.css
+   ========================================================================== */
+
+/* Cabeçalho da página */
+.page-header {
+  margin-bottom: 32px;
+}
+
+.page-title {
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--texto-principal);
+  margin-bottom: 8px;
+}
+
+.page-subtitle {
+  font-size: 1rem;
+  color: var(--texto-secundario);
+}
+
+/* 1. BARRA DE BUSCA EXPANDIDA */
+.help-search {
+  margin-bottom: 48px;
+  max-width: 720px;
+}
+
+.search-container.large .search-input {
+  padding: 16px 16px 16px 48px;
+  font-size: 1.05rem;
+  border-radius: 12px;
+  box-shadow: var(--shadow);
+}
+
+.search-container.large .search-icon {
+  left: 16px;
+  width: 24px;
+  height: 24px;
+}
+
+/* 2. GRID DE CARDS TUTORIAIS */
+.help-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 24px;
+  margin-bottom: 56px;
+}
+
+.help-card {
+  background-color: var(--bg-card);
+  border: 1px solid var(--borda);
+  border-radius: 12px;
+  padding: 24px;
+  box-shadow: var(--shadow);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.help-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  border-radius: 10px;
+  background-color: rgba(37, 99, 235, 0.1); /* Azul sutil */
+  color: var(--color-primary);
+}
+
+/* Ajuste do ícone no modo dark para melhor contraste */
+html[data-theme="dark"] .help-icon {
+  background-color: rgba(59, 130, 246, 0.15);
+}
+
+.help-title {
+  font-size: 1.15rem;
+  font-weight: 600;
+  color: var(--texto-principal);
+}
+
+.help-description {
+  font-size: 0.925rem;
+  color: var(--texto-secundario);
+  line-height: 1.5;
+}
+
+/* 3. SEÇÃO FAQ (Utilizando <details> e <summary> nativos) */
+.faq-section {
+  margin-bottom: 56px;
+}
+
+.faq-list {
+  margin-top: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  max-width: 800px;
+}
+
+.faq-item {
+  background-color: var(--bg-card);
+  border: 1px solid var(--borda);
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: var(--shadow);
+}
+
+.faq-question {
+  padding: 18px 24px;
+  font-weight: 600;
+  color: var(--texto-principal);
+  cursor: pointer;
+  list-style: none; /* Remove a seta padrão do navegador */
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  user-select: none;
+}
+
+/* Cria uma seta personalizada elegante baseada em CSS puro */
+.faq-question::after {
+  content: '';
+  width: 8px;
+  height: 8px;
+  border-right: 2px solid var(--texto-secundario);
+  border-bottom: 2px solid var(--texto-secundario);
+  transform: rotate(45deg);
+  transition: transform 0.2s ease;
+  margin-left: 12px;
+}
+
+/* Rotação da seta quando o item expande */
+.faq-item[open] .faq-question::after {
+  transform: rotate(-135deg);
+}
+
+.faq-question:hover {
+  background-color: var(--bg-principal);
+}
+
+.faq-answer {
+  padding: 0 24px 20px 24px;
+  color: var(--texto-secundario);
+  font-size: 0.95rem;
+  line-height: 1.6;
+  border-top: 1px solid transparent;
+}
+
+.faq-item[open] .faq-answer {
+  border-top-color: var(--borda);
+}
+
+/* 4. SEÇÃO DE CONTATO FINAL */
+.contact-section {
+  max-width: 800px;
+}
+
+.contact-card {
+  margin-top: 24px;
+  background-color: var(--bg-card);
+  border: 1px solid var(--borda);
+  border-radius: 12px;
+  padding: 32px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 24px;
+  box-shadow: var(--shadow);
+  /* Degradê cinza/azul bem discreto no fundo do card */
+  background: linear-gradient(135deg, var(--bg-card) 0%, rgba(37, 99, 235, 0.02) 100%);
+}
+
+.contact-info {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.contact-title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--texto-principal);
+}
+
+.contact-description {
+  font-size: 0.95rem;
+  color: var(--texto-secundario);
+}
+
+.contact-link {
+  color: var(--color-primary);
+  font-weight: 500;
+  text-decoration: none;
+  font-size: 0.95rem;
+  margin-top: 4px;
+  display: inline-block;
+}
+
+.contact-link:hover {
+  text-decoration: underline;
+}
+
+/* ==========================================================================
+   RESPONSIVIDADE (Mobile & Tablets)
+   ========================================================================== */
+@media (max-width: 768px) {
+  .contact-card {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 24px;
+  }
+  
+  .contact-actions {
+    width: 100%;
+  }
+  
+  .contact-actions .btn-primary {
+    width: 100%;
+  }
+
+  .page-title {
+    font-size: 1.75rem;
+  }
+}

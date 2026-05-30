@@ -1,0 +1,284 @@
+/* ==========================================================================
+   ARQUIVO: perfil.css
+   ========================================================================== */
+
+/* Cabeçalho da Página */
+.page-header {
+  margin-bottom: 32px;
+}
+
+.page-title {
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--texto-principal);
+  margin-bottom: 8px;
+}
+
+.page-subtitle {
+  font-size: 1rem;
+  color: var(--texto-secundario);
+}
+
+/* ==========================================================================
+   1. LAYOUT GRID DA PÁGINA
+   ========================================================================== */
+.profile-container {
+  display: grid;
+  grid-template-columns: 1fr 280px;
+  gap: 24px;
+  max-width: 1100px;
+  align-items: start;
+}
+
+/* ==========================================================================
+   2. CARD PRINCIPAL & AVATAR
+   ========================================================================== */
+.profile-card {
+  background-color: var(--bg-card);
+  border: 1px solid var(--borda);
+  border-radius: 12px;
+  padding: 32px;
+  box-shadow: var(--shadow);
+}
+
+/* Seção Superior do Perfil (Avatar e Identificação) */
+.profile-avatar-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  border-bottom: 1px solid var(--borda);
+  padding-bottom: 28px;
+  margin-bottom: 28px;
+}
+
+/* Avatar em formato de Círculo com Iniciais */
+.profile-avatar {
+  position: relative;
+  width: 96px;
+  height: 96px;
+  background-color: var(--color-primary);
+  color: #ffffff;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2rem;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  margin-bottom: 16px;
+  box-shadow: 0 4px 12px rgba(30, 64, 175, 0.2);
+}
+
+/* Botão Flutuante de Editar Avatar */
+.avatar-edit {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  background-color: var(--bg-card);
+  color: var(--texto-principal);
+  border: 1px solid var(--borda);
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: var(--shadow);
+  transition: all 0.2s ease;
+}
+
+.avatar-edit:hover {
+  background-color: var(--color-primary);
+  color: #ffffff;
+  border-color: var(--color-primary);
+}
+
+.profile-name {
+  font-size: 1.35rem;
+  font-weight: 600;
+  color: var(--texto-principal);
+  margin-bottom: 4px;
+}
+
+.profile-email {
+  font-size: 0.9rem;
+  color: var(--texto-secundario);
+  margin-bottom: 12px;
+}
+
+/* Badge indicadora de tipo de conta */
+.profile-badge {
+  background-color: rgba(30, 64, 175, 0.08);
+  color: var(--color-primary);
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+
+html[data-theme="dark"] .profile-badge {
+  background-color: rgba(59, 130, 246, 0.15);
+  color: #60a5fa;
+}
+
+/* ==========================================================================
+   3. FORMULÁRIO DE DADOS PESSOAIS
+   ========================================================================== */
+.profile-form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.form-label {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--texto-principal);
+}
+
+.form-input {
+  background-color: var(--bg-principal);
+  border: 1px solid var(--borda);
+  color: var(--texto-principal);
+  padding: 10px 14px;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  font-family: inherit;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.form-input:focus {
+  outline: none;
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px rgba(30, 64, 175, 0.12);
+}
+
+/* Regras para inputs desabilitados (Ex: CPF) */
+.form-input:disabled {
+  background-color: var(--borda);
+  color: var(--texto-secundario);
+  cursor: not-allowed;
+  opacity: 0.7;
+}
+
+.form-hint {
+  font-size: 0.75rem;
+  color: var(--texto-secundario);
+  margin-top: 2px;
+}
+
+.form-actions {
+  margin-top: 12px;
+  display: flex;
+  justify-content: flex-end;
+}
+
+/* Alinhamento para botão global */
+.profile-form .btn-primary {
+  padding: 12px 24px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  border: none;
+  cursor: pointer;
+  border-radius: 8px;
+}
+
+/* ==========================================================================
+   4. SEÇÃO DE ESTATÍSTICAS (Sidebar Direita)
+   ========================================================================== */
+.profile-stats {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.stat-card {
+  background-color: var(--bg-card);
+  border: 1px solid var(--borda);
+  border-radius: 12px;
+  padding: 20px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  box-shadow: var(--shadow);
+}
+
+.stat-icon {
+  width: 44px;
+  height: 44px;
+  background-color: var(--bg-principal);
+  color: var(--color-primary);
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.stat-info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.stat-value {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--texto-principal);
+  line-height: 1.2;
+}
+
+.stat-label {
+  font-size: 0.85rem;
+  color: var(--texto-secundario);
+}
+
+/* ==========================================================================
+   RESPONSIVIDADE (Mobile)
+   ========================================================================== */
+@media (max-width: 768px) {
+  .profile-container {
+    grid-template-columns: 1fr; /* Quebra as colunas colocando as estatísticas abaixo do form */
+    gap: 24px;
+  }
+  
+  .profile-card {
+    padding: 20px;
+  }
+  
+  .profile-stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 12px;
+  }
+}
+
+@media (max-width: 480px) {
+  .form-row {
+    grid-template-columns: 1fr; /* Nome e Sobrenome empilham no mobile vertical */
+    gap: 20px;
+  }
+  
+  .profile-stats {
+    grid-template-columns: 1fr;
+  }
+  
+  .form-actions .btn-primary {
+    width: 100%;
+    text-align: center;
+  }
+}

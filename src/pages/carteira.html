@@ -1,0 +1,204 @@
+<!-- carteira.html -->
+<!DOCTYPE html>
+<html lang="pt-BR" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Carteira | FinMarket</title>
+    <link rel="icon" type="image/x-icon" href="../public/favicon.ico" sizes="any">
+    <link rel="icon" type="image/svg+xml" href="../public/favicon.svg">
+    <link rel="stylesheet" href="../css/global.css">
+    <link rel="stylesheet" href="../css/carteira.css">
+    <link rel="stylesheet" href="../css/carteiraitens.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script>
+        (function() {
+            // Verifica se há um tema salvo, senão verifica a preferência do sistema operacional
+            const savedTheme = localStorage.getItem('finmarket-theme');
+            const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+            
+            const themeToApply = savedTheme || (systemPrefersDark ? 'dark' : 'light');
+            
+            // Aplica imediatamente antes da renderização do HTML
+            document.documentElement.setAttribute('data-theme', themeToApply);
+        })();
+    </script>
+</head>
+</head>
+<body>
+    <div class="menu-overlay" id="menuOverlay" aria-hidden="true"></div>
+
+    <header class="site-header">
+        <div class="header-inner">
+            <div class="header-left">
+                <button class="menu-toggle" id="menuToggle" aria-label="Abrir menu" aria-expanded="false" aria-controls="sidebar">
+                    <span class="hamburger-line"></span>
+                    <span class="hamburger-line"></span>
+                    <span class="hamburger-line"></span>
+                </button>
+                <a href="index.html" class="logo">
+                    <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                        <rect width="32" height="32" rx="8" fill="var(--color-primary)"/>
+                        <path d="M8 12L16 8L24 12V20L16 24L8 20V12Z" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M16 16V24" stroke="white" stroke-width="2" stroke-linecap="round"/>
+                        <path d="M16 16L24 12" stroke="white" stroke-width="2" stroke-linecap="round"/>
+                        <path d="M16 16L8 12" stroke="white" stroke-width="2" stroke-linecap="round"/>
+                    </svg>
+                    <span class="logo-text">FinMarket</span>
+                </a>
+            </div>
+            <div class="header-center">
+                <div class="search-container">
+                    <svg class="search-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                        <circle cx="11" cy="11" r="8"/>
+                        <path d="M21 21l-4.35-4.35"/>
+                    </svg>
+                    <input type="search" class="search-input" placeholder="Buscar..." aria-label="Buscar">
+                </div>
+            </div>
+            <div class="header-right">
+                <button class="theme-toggle" id="themeToggle" aria-label="Alternar tema">
+                    <svg class="theme-icon-light" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="5"/>
+                        <path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/>
+                    </svg>
+                    <svg class="theme-icon-dark" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+                    </svg>
+                </button>
+                <a href="carteira.html" class="wallet-btn active" aria-label="Minha carteira">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M21 12V7H5a2 2 0 0 1 0-4h14v4"/>
+                        <path d="M3 5v14a2 2 0 0 0 2 2h16v-5"/>
+                        <path d="M18 12a2 2 0 0 0 0 4h4v-4h-4z"/>
+                    </svg>
+                    <span class="wallet-amount" id="headerWallet">R$ 0,00</span>
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <aside class="sidebar" id="sidebar" aria-label="Menu de navegação">
+        <div class="sidebar-header">
+            <span class="sidebar-title">Menu</span>
+            <button class="sidebar-close" id="sidebarClose" aria-label="Fechar menu">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M18 6L6 18M6 6l12 12"/>
+                </svg>
+            </button>
+        </div>
+        <nav class="sidebar-nav">
+            <ul class="nav-list">
+                <li class="nav-item"><a href="perfil.html" class="nav-link"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg><span>Perfil</span></a></li>
+                <li class="nav-item"><a href="ordens.html" class="nav-link"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2"/><rect x="9" y="3" width="6" height="4" rx="2"/></svg><span>Minhas Ordens</span></a></li>
+                <li class="nav-item"><a href="historico.html" class="nav-link"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg><span>Histórico</span></a></li>
+                <li class="nav-item"><a href="configuracoes.html" class="nav-link"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg><span>Configurações</span></a></li>
+                <li class="nav-item"><a href="ajuda.html" class="nav-link"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg><span>Ajuda</span></a></li>
+            </ul>
+        </nav>
+        <div class="sidebar-footer">
+            <a href="carteira.html" class="btn-primary sidebar-wallet-btn">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12V7H5a2 2 0 0 1 0-4h14v4"/><path d="M3 5v14a2 2 0 0 0 2 2h16v-5"/><path d="M18 12a2 2 0 0 0 0 4h4v-4h-4z"/></svg>
+                <span>Ver Carteira</span>
+            </a>
+        </div>
+    </aside>
+
+    <main class="main-content">
+        <div class="page-header">
+            <h1 class="page-title">Minha Carteira</h1>
+            <p class="page-subtitle">Visão geral dos seus investimentos</p>
+        </div>
+
+        <div class="wallet-dashboard">
+            <!-- Balance Card -->
+            <div class="wallet-card balance-card">
+                <div class="wallet-card-header">
+                    <span class="wallet-card-label">Saldo Disponível</span>
+                    <div class="wallet-card-badge">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>
+                        </svg>
+                    </div>
+                </div>
+                <div class="wallet-card-value" id="walletBalance">R$ 0,00</div>
+                <div class="wallet-card-meta">
+                    <span class="positive">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M7 17l5-5 5 5M12 12V3"/>
+                        </svg>
+                        +8.4%
+                    </span>
+                    <span>vs. mês anterior</span>
+                </div>
+            </div>
+
+            <!-- Invested Card -->
+            <div class="wallet-card invested-card">
+                <div class="wallet-card-header">
+                    <span class="wallet-card-label">Total Investido</span>
+                    <div class="wallet-card-badge secondary">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M3 3v18h18"/>
+                            <path d="M18.7 8l-5.1 5.2-2.8-2.7L7 14.3"/>
+                        </svg>
+                    </div>
+                </div>
+                <div class="wallet-card-value" id="investedBalance">R$ 0,00</div>
+                <div class="wallet-card-meta">
+                    <span class="text-muted">Em 12 ativos diferentes</span>
+                </div>
+            </div>
+
+            <!-- Day Change Card -->
+            <div class="wallet-card change-card">
+                <div class="wallet-card-header">
+                    <span class="wallet-card-label">Variação do Dia</span>
+                    <div class="wallet-card-badge accent">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/>
+                            <polyline points="17 6 23 6 23 12"/>
+                        </svg>
+                    </div>
+                </div>
+                <div class="wallet-card-value positive" id="dayChange">+R$ 0,00</div>
+                <div class="wallet-card-meta">
+                    <span class="positive">+1.2%</span>
+                    <span>nas últimas 24h</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Assets List -->
+        <section class="wallet-assets-section">
+            <div class="section-header">
+                <h2 class="section-title">Meus Ativos</h2>
+                <button class="btn-text" onclick="window.location.href='index.html'">+ Adicionar</button>
+            </div>
+            
+            <div class="wallet-assets-list" id="walletAssetsList">
+                <!-- Injected via JavaScript -->
+            </div>
+            
+            <div class="wallet-empty-state" id="walletEmptyState" style="display: none;">
+                <div class="empty-icon">
+                    <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                        <path d="M21 12V7H5a2 2 0 0 1 0-4h14v4"/>
+                        <path d="M3 5v14a2 2 0 0 0 2 2h16v-5"/>
+                        <path d="M18 12a2 2 0 0 0 0 4h4v-4h-4z"/>
+                    </svg>
+                </div>
+                <h3 class="empty-title">Carteira vazia</h3>
+                <p class="empty-description">Comece a investir adicionando ativos ao seu portfólio</p>
+                <a href="index.html" class="btn-primary">Explorar Ativos</a>
+            </div>
+        </section>
+    </main>
+
+    <div class="toast-container" id="toastContainer" aria-live="polite" aria-atomic="true"></div>
+
+    <script type="module" src="../js/main.js"></script>
+</body>
+</html>

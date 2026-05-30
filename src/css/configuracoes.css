@@ -1,0 +1,312 @@
+/* ==========================================================================
+   ARQUIVO: configuracoes.css
+   ========================================================================== */
+
+/* Cabeçalho da Página */
+.page-header {
+  margin-bottom: 32px;
+}
+
+.page-title {
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--texto-principal);
+  margin-bottom: 8px;
+}
+
+.page-subtitle {
+  font-size: 1rem;
+  color: var(--texto-secundario);
+}
+
+/* 1. CONTAINER & SEÇÕES DE CONFIGURAÇÃO */
+.settings-container {
+  max-width: 800px;
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+.settings-section {
+  background-color: var(--bg-card);
+  border: 1px solid var(--borda);
+  border-radius: 12px;
+  padding: 24px;
+  box-shadow: var(--shadow);
+}
+
+.settings-section-title {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: var(--texto-principal);
+  margin-bottom: 20px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid var(--borda);
+}
+
+/* Item individual de configuração */
+.setting-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 24px;
+  padding: 16px 0;
+}
+
+.setting-item:not(:last-child) {
+  border-bottom: 1px solid rgba(226, 232, 240, 0.4);
+}
+
+html[data-theme="dark"] .setting-item:not(:last-child) {
+  border-bottom: 1px solid rgba(51, 65, 85, 0.4);
+}
+
+.setting-info {
+  flex: 1;
+}
+
+.setting-title {
+  font-size: 1rem;
+  font-weight: 500;
+  color: var(--texto-principal);
+  margin-bottom: 4px;
+}
+
+.setting-description {
+  font-size: 0.875rem;
+  color: var(--texto-secundario);
+}
+
+/* 2. CONTROLES: TOGGLE SWITCH (INTERRUPTOR) */
+.toggle-switch {
+  position: relative;
+  display: inline-block;
+  width: 48px;
+  height: 24px;
+  flex-shrink: 0;
+}
+
+.toggle-switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.toggle-slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: var(--borda);
+  border-radius: 24px;
+  transition: .3s;
+}
+
+.toggle-slider:before {
+  position: absolute;
+  content: "";
+  height: 18px;
+  width: 18px;
+  left: 3px;
+  bottom: 3px;
+  background-color: white;
+  border-radius: 50%;
+  transition: .3s;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.15);
+}
+
+input:checked + .toggle-slider {
+  background-color: var(--color-primary);
+}
+
+input:focus + .toggle-slider {
+  box-shadow: 0 0 1px var(--color-primary);
+}
+
+input:checked + .toggle-slider:before {
+  transform: translateX(24px);
+}
+
+/* 3. CONTROLES: SELETOR DE TEMA EXPANDIDO */
+.theme-toggle-large {
+  display: flex;
+  background-color: var(--bg-principal);
+  border: 1px solid var(--borda);
+  border-radius: 8px;
+  padding: 4px;
+  cursor: pointer;
+}
+
+.theme-option {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--texto-secundario);
+  border-radius: 6px;
+  transition: all 0.2s ease;
+}
+
+.theme-option svg {
+  stroke: currentColor;
+}
+
+/* Estado ativo do tema selecionado */
+.theme-option.active {
+  background-color: var(--bg-card);
+  color: var(--color-primary);
+  box-shadow: var(--shadow);
+}
+
+/* 4. ZONA DE PERIGO & BOTÃO DE PERIGO */
+.danger-zone {
+  border-color: rgba(239, 68, 68, 0.4);
+}
+
+.danger-zone .settings-section-title {
+  color: #ef4444;
+  border-bottom-color: rgba(239, 68, 68, 0.2);
+}
+
+.btn-danger {
+  background-color: #ef4444;
+  color: #ffffff;
+  border: none;
+  padding: 10px 18px;
+  border-radius: 6px;
+  font-weight: 600;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  white-space: nowrap;
+}
+
+.btn-danger:hover {
+  background-color: #dc2626;
+}
+
+/* Rodapé de Versão */
+.settings-footer {
+  text-align: center;
+  padding: 16px 0;
+  font-size: 0.85rem;
+  color: var(--texto-secundario);
+  opacity: 0.7;
+}
+
+.settings-footer p {
+  margin-bottom: 4px;
+}
+
+/* 5. MODAL DE CONFIRMAÇÃO */
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  display: none; /* Controlado via JS */
+  align-items: center;
+  justify-content: center;
+  z-index: 300;
+}
+
+/* Exibe o modal quando a classe open ou estado ativo estiver presente */
+.modal.open, .modal[aria-hidden="false"] {
+  display: flex;
+}
+
+.modal-overlay {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(15, 23, 42, 0.6);
+  backdrop-filter: blur(2px);
+}
+
+.modal-content {
+  position: relative;
+  background-color: var(--bg-card);
+  border: 1px solid var(--borda);
+  border-radius: 14px;
+  padding: 32px;
+  max-width: 440px;
+  width: 90%;
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  animation: modalFadeIn 0.25s ease-out;
+  z-index: 310;
+}
+
+.modal-title {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--texto-principal);
+  margin-bottom: 12px;
+}
+
+.modal-text {
+  font-size: 0.95rem;
+  color: var(--texto-secundario);
+  line-height: 1.5;
+  margin-bottom: 24px;
+}
+
+.modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+}
+
+@keyframes modalFadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* ==========================================================================
+   RESPONSIVIDADE (Mobile)
+   ========================================================================== */
+@media (max-width: 576px) {
+  .setting-item {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+  }
+
+  .setting-control {
+    width: 100%;
+    display: flex;
+    justify-content: flex-start;
+  }
+
+  .theme-toggle-large {
+    width: 100%;
+  }
+
+  .theme-option {
+    flex: 1;
+    justify-content: center;
+  }
+
+  .btn-danger {
+    width: 100%;
+    text-align: center;
+  }
+
+  .modal-actions {
+    flex-direction: column-reverse;
+  }
+
+  .modal-actions button {
+    width: 100%;
+  }
+}

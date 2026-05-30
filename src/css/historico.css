@@ -1,0 +1,240 @@
+/* ==========================================================================
+   ARQUIVO: historico.css
+   ========================================================================== */
+
+/* Cabeçalho da Página */
+.page-header {
+  margin-bottom: 32px;
+}
+
+.page-title {
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--texto-principal);
+  margin-bottom: 8px;
+}
+
+.page-subtitle {
+  font-size: 1rem;
+  color: var(--texto-secundario);
+}
+
+/* ==========================================================================
+   1. FILTROS (Chips/Pílulas)
+   ========================================================================== */
+.history-filters {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 24px;
+  overflow-x: auto; /* Garante rolagem se houver muitos filtros no mobile */
+  padding-bottom: 4px;
+}
+
+/* Esconder barra de rolagem horizontal nos filtros para ficar clean */
+.history-filters::-webkit-scrollbar {
+  height: 0px;
+}
+
+.filter-btn {
+  background-color: var(--bg-card);
+  color: var(--texto-secundario);
+  border: 1px solid var(--borda);
+  padding: 8px 18px;
+  border-radius: 20px; /* Estilo pílula */
+  font-size: 0.9rem;
+  font-weight: 500;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all 0.2s ease;
+}
+
+.filter-btn:hover {
+  background-color: var(--bg-principal);
+  color: var(--texto-principal);
+}
+
+/* Estado ativo do filtro selecionado */
+.filter-btn.active {
+  background-color: var(--color-primary);
+  color: #ffffff;
+  border-color: var(--color-primary);
+  box-shadow: var(--shadow);
+}
+
+/* ==========================================================================
+   2. LISTA DE TRANSAÇÕES (Injetadas por JS)
+   ========================================================================== */
+.history-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  max-width: 1000px;
+}
+
+/* Card de Transação Individual */
+.history-item {
+  background-color: var(--bg-card);
+  border: 1px solid var(--borda);
+  border-radius: 12px;
+  padding: 16px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  box-shadow: var(--shadow);
+  transition: transform 0.2s ease, border-color 0.2s ease;
+}
+
+.history-item:hover {
+  transform: translateY(-2px);
+  border-color: rgba(30, 64, 175, 0.3);
+}
+
+html[data-theme="dark"] .history-item:hover {
+  border-color: rgba(59, 130, 246, 0.4);
+}
+
+/* Bloco Esquerdo: Ícone indicador e Info Principal */
+.item-main {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+/* Ícone de status (Compra/Venda) */
+.item-icon-wrapper {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+/* Variações de cores baseadas na operação */
+.history-item.type-buy .item-icon-wrapper {
+  background-color: rgba(16, 185, 129, 0.1);
+  color: var(--positive);
+}
+
+.history-item.type-sell .item-icon-wrapper {
+  background-color: rgba(239, 68, 68, 0.1);
+  color: #ef4444;
+}
+
+/* Textos informativos */
+.item-details {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.item-asset-name {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--texto-principal);
+}
+
+.item-meta {
+  font-size: 0.85rem;
+  color: var(--texto-secundario);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* Divisorzinho entre data e quantidade */
+.item-meta-separator {
+  width: 3px;
+  height: 3px;
+  background-color: var(--texto-secundario);
+  border-radius: 50%;
+  opacity: 0.5;
+}
+
+/* Bloco Direito: Valores Financeiros */
+.item-financials {
+  text-align: right;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.item-total-value {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--texto-principal);
+}
+
+.item-unit-price {
+  font-size: 0.85rem;
+  color: var(--texto-secundario);
+}
+
+/* ==========================================================================
+   3. ESTADO VAZIO (Empty State)
+   ========================================================================== */
+.history-empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 60px 24px;
+  background-color: var(--bg-card);
+  border: 1px solid var(--borda);
+  border-radius: 12px;
+  max-width: 1000px;
+  box-shadow: var(--shadow);
+}
+
+.empty-icon {
+  color: var(--texto-secundario);
+  opacity: 0.6;
+  margin-bottom: 16px;
+  background-color: var(--bg-principal);
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.empty-title {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: var(--texto-principal);
+  margin-bottom: 6px;
+}
+
+.empty-description {
+  font-size: 0.9rem;
+  color: var(--texto-secundario);
+  max-width: 320px;
+}
+
+/* ==========================================================================
+   RESPONSIVIDADE (Mobile)
+   ========================================================================== */
+@media (max-width: 576px) {
+  .history-item {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 16px;
+    gap: 12px;
+  }
+
+  .item-financials {
+    text-align: left;
+    padding-left: 56px; /* Alinha os valores com o texto do ativo, pulando o círculo do ícone */
+    width: 100%;
+    border-top: 1px solid rgba(226, 232, 240, 0.4);
+    padding-top: 10px;
+  }
+  
+  html[data-theme="dark"] .item-financials {
+    border-top-color: rgba(51, 65, 85, 0.4);
+  }
+}

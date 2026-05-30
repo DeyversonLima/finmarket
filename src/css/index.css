@@ -1,0 +1,362 @@
+/* ==========================================================================
+   HEADER (Topo do Site)
+   ========================================================================== */
+.site-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 70px;
+  background-color: var(--bg-card);
+  border-bottom: 1px solid var(--borda);
+  z-index: 100;
+}
+
+.header-inner {
+  max-width: 1400px;
+  height: 100%;
+  margin: 0 auto;
+  padding: 0 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.header-left, .header-right {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+/* Logo */
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+}
+
+.logo-text {
+  font-weight: 700;
+  font-size: 1.25rem;
+  color: var(--texto-principal);
+}
+
+/* Barra de Busca */
+.header-center {
+  flex: 1;
+  max-width: 500px;
+}
+
+.search-container {
+  position: relative;
+  width: 100%;
+}
+
+.search-icon {
+  position: absolute;
+  left: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--texto-secundario);
+  pointer-events: none;
+}
+
+.search-input {
+  width: 100%;
+  padding: 10px 12px 10px 40px;
+  border-radius: 8px;
+  border: 1px solid var(--borda);
+  background-color: var(--bg-principal);
+  color: var(--texto-principal);
+  font-size: 0.9rem;
+  outline: none;
+}
+
+.search-input:focus {
+  border-color: var(--color-primary);
+}
+
+/* Botões de Controle (Tema & Carteira) */
+.theme-toggle, .menu-toggle, .sidebar-close {
+  background: none;
+  border: none;
+  color: var(--texto-principal);
+  cursor: pointer;
+  padding: 8px;
+  border-radius: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.theme-toggle:hover {
+  background-color: var(--bg-principal);
+}
+
+/* Controle de exibição dos ícones do Tema */
+html[data-theme="light"] .theme-icon-dark { display: none; }
+html[data-theme="dark"] .theme-icon-light { display: none; }
+
+.wallet-btn {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background-color: var(--color-primary);
+  color: #ffffff;
+  padding: 10px 16px;
+  border-radius: 8px;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.wallet-btn:hover {
+  background-color: var(--color-primary-hover);
+}
+
+/* Hamburger (Mobile) */
+.menu-toggle {
+  display: none; /* Sumido no Desktop */
+  flex-direction: column;
+  gap: 4px;
+}
+
+.hamburger-line {
+  width: 20px;
+  height: 2px;
+  background-color: var(--texto-principal);
+}
+
+/* ==========================================================================
+   SIDEBAR (Menu Lateral Fixo no Desktop)
+   ========================================================================== */
+.sidebar {
+  position: fixed;
+  top: 70px;
+  left: 0;
+  width: 260px;
+  height: calc(100vh - 70px);
+  background-color: var(--bg-card);
+  border-right: 1px solid var(--borda);
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  z-index: 90;
+}
+
+.sidebar-header {
+  display: none; /* Apenas visível no mobile */
+}
+
+.sidebar-nav .nav-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.nav-link {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px;
+  color: var(--texto-secundario);
+  border-radius: 8px;
+  font-weight: 500;
+  text-decoration: none;
+}
+
+.nav-link:hover, .nav-link.active {
+  background-color: var(--bg-principal);
+  color: var(--color-primary);
+}
+
+/* ==========================================================================
+   MAIN CONTENT & HERO SECTION
+   ========================================================================== */
+.main-content {
+  margin-top: 70px;
+  margin-left: 260px; /* Margem da Sidebar */
+  padding: 40px;
+  max-width: 1200px;
+}
+
+.hero {
+  display: grid;
+  grid-template-columns: 1.2fr 0.8fr;
+  gap: 40px;
+  align-items: center;
+  background: linear-gradient(135deg, rgba(37, 99, 235, 0.05) 0%, rgba(30, 41, 59, 0.02) 100%);
+  padding: 48px;
+  border-radius: 16px;
+  border: 1px solid var(--borda);
+  margin-bottom: 48px;
+}
+
+.hero-title {
+  font-size: 2.5rem;
+  line-height: 1.2;
+  font-weight: 700;
+  margin-bottom: 16px;
+}
+
+.hero-subtitle {
+  color: var(--texto-secundario);
+  font-size: 1.1rem;
+  margin-bottom: 24px;
+}
+
+.hero-actions {
+  display: flex;
+  gap: 16px;
+}
+
+/* Botões Reutilizáveis */
+.btn-primary, .btn-secondary {
+  padding: 12px 24px;
+  border-radius: 8px;
+  font-weight: 600;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  border: none;
+  cursor: pointer;
+}
+
+.btn-primary {
+  background-color: var(--color-primary);
+  color: #fff;
+}
+.btn-primary:hover { background-color: var(--color-primary-hover); }
+
+.btn-secondary {
+  background-color: transparent;
+  color: var(--texto-principal);
+  border: 1px solid var(--borda);
+}
+.btn-secondary:hover { background-color: var(--bg-principal); }
+
+/* Card Indicador da Hero */
+.hero-card {
+  background-color: var(--bg-card);
+  border: 1px solid var(--borda);
+  border-radius: 12px;
+  padding: 24px;
+  box-shadow: var(--shadow);
+}
+
+.hero-card-header {
+  display: flex;
+  justify-content: space-between;
+  color: var(--texto-secundario);
+  font-size: 0.9rem;
+  margin-bottom: 8px;
+}
+
+.hero-card-value {
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 12px;
+}
+
+.hero-card-change {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 0.875rem;
+  font-weight: 600;
+}
+
+.hero-card-change.positive { color: var(--positive); }
+
+/* ==========================================================================
+   CATALOG SECTIONS & GRID DE PRODUTOS
+   ========================================================================== */
+.catalog-section {
+  margin-bottom: 48px;
+}
+
+.section-header {
+  margin-bottom: 24px;
+}
+
+.section-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+}
+
+.section-description {
+  color: var(--texto-secundario);
+  font-size: 0.95rem;
+}
+
+/* Onde seus cards dinâmicos via JS vão cair */
+.products-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 24px;
+}
+
+/* ==========================================================================
+   RESPONSIVIDADE (Mobile & Tablets)
+   ========================================================================== */
+@media (max-width: 992px) {
+  .main-content {
+    margin-left: 0; /* Tira espaço da sidebar fixa */
+    padding: 20px;
+  }
+
+  .header-center {
+    display: none; /* Esconde busca direta no topo para poupar espaço */
+  }
+
+  .menu-toggle {
+    display: flex; /* Revela o hambúrguer */
+  }
+
+  /* Transforma a Sidebar em Drawer Lateral ocultável */
+  .sidebar {
+    top: 0;
+    height: 100vh;
+    transform: translateX(-100%);
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    z-index: 200;
+  }
+
+  /* Classe para abrir a sidebar (via JS adicionando na tag .sidebar) */
+  .sidebar.open {
+    transform: translateX(0);
+  }
+
+  .sidebar-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 32px;
+  }
+
+  .sidebar-title {
+    font-weight: 700;
+    font-size: 1.2rem;
+  }
+
+  .hero {
+    grid-template-columns: 1fr;
+    padding: 24px;
+  }
+
+  /* Overlay de fundo quando menu abrir */
+  .menu-overlay.active {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(15, 23, 42, 0.6);
+    z-index: 150;
+  }
+}
