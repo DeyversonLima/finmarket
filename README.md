@@ -1,59 +1,75 @@
-# 📊 FinMarket — Simulador de Mercado Financeiro
+# FinMarket
 
-![FinMarket Favicon](favicon.svg)
+[![CI](https://github.com/DeyversonLima/finmarket/actions/workflows/ci.yml/badge.svg)](https://github.com/DeyversonLima/finmarket/actions/workflows/ci.yml)
+[![JavaScript](https://img.shields.io/badge/JavaScript-ES6%2B-F7DF1E?logo=javascript&logoColor=111)](https://developer.mozilla.org/docs/Web/JavaScript)
 
-O **FinMarket** é uma plataforma web responsiva de simulação de investimentos e gerenciamento de carteira de ativos em tempo real. O projeto foi desenvolvido com foco em performance, acessibilidade e uma experiência de usuário (UX) fluida, simulando operações de compra e venda de ações, títulos de renda fixa, moedas estrangeiras e criptoativos.
+Simulador educacional de mercado financeiro e carteira de investimentos, construído com HTML, CSS e JavaScript modular. A aplicação roda inteiramente no navegador e usa dados fictícios para demonstrar compra, venda, histórico e persistência local.
 
----
+> O FinMarket não consulta cotações reais e não oferece recomendação de investimento. Valores e ativos exibidos servem somente para demonstração de software.
 
-## 🚀 Funcionalidades Principais
+## Recursos
 
-* **Banca Inicial de R$ 1.000.000,00:** Cada usuário começa com um saldo fictício substancial para montar sua estratégia de alocação de ativos.
-* **Vitrine Dinâmica com 30 Ativos:** Listagem e categorização realista de 10 Ações (B3), 10 Títulos de Renda Fixa (Públicos e Privados) e 10 Moedas/Criptoativos.
-* **Gerenciamento de Carteira em Tempo Real:** Sincronização instantânea de saldos na Navbar (global) e no painel principal da Dashboard ao comprar ou vender ativos.
-* **Sistema de Notificações Inteligente (Fila de Toasts):** Alertas flutuantes de sucesso ou erro limitados a no máximo 3 notificações simultâneas na tela, evitando poluição visual (*Spam*).
-* **Persistência de Dados Localizada:** Integração total com o `localStorage` do navegador através de uma camada `DataStore`, garantindo que o saldo, histórico e carteira não sumam ao atualizar ou mudar de página.
-* **Tema Dark & Light Nativo (Anti-Flash):** Sistema de troca de temas que armazena a preferência do usuário e previne o efeito de "piscada branca" (*FOUC*) durante o carregamento das páginas.
+- catálogo com 30 ativos simulados;
+- busca por nome ou ticker;
+- ordens de compra e venda;
+- carteira e saldo atualizados após cada operação;
+- histórico de transações;
+- perfil e preferências persistidos no navegador;
+- fila de notificações;
+- tema claro/escuro com preferência salva;
+- layout responsivo e menu para dispositivos móveis.
 
----
+## Executar
 
-## 🛠️ Tecnologias Utilizadas
+Não há etapa de build nem dependências de produção.
 
-O projeto adota uma abordagem moderna e limpa de desenvolvimento, utilizando apenas tecnologias web nativas (**Vanilla Architecture**), sem a dependência de frameworks pesados:
+```bash
+git clone https://github.com/DeyversonLima/finmarket.git
+cd finmarket
+python -m http.server 8000
+```
 
-* **HTML5:** Estrutura semântica e acessível (regras ARIA).
-* **CSS3 Avançado:** Layout baseado em CSS Grids e Flexbox, design 100% responsivo e uso extensivo de *CSS Variables* para gerenciamento dinâmico de temas.
-* **JavaScript (ES6+):** Organizado de forma modular utilizando `import/export` nativo do navegador, separando responsabilidades (Renderers, Stores, Configurações).
+Abra `http://localhost:8000`. O arquivo da raiz encaminha para a aplicação em `src/pages/index.html`, o que também permite publicação como site estático.
 
----
+Também é possível abrir `src/pages/index.html` diretamente, embora um servidor local ofereça comportamento mais próximo do deploy.
 
-⚙️ Como Executar o Projeto Localmente
-Como o projeto utiliza Módulos JavaScript nativos (type="module"), por questões de segurança do navegador (regras de CORS), os arquivos não podem ser abertos clicando duas vezes diretamente sobre o .html. É necessário rodá-los a partir de um servidor local.
+## Estrutura
 
-Método Recomendado (VS Code):
-Instale a extensão Live Server no seu VS Code.
+```text
+src/
+├── css/                 # estilos globais e por página
+├── js/
+│   ├── config/          # constantes e catálogo simulado
+│   └── modules/         # carteira, transações, tema, busca e UI
+├── pages/               # telas da aplicação
+└── public/              # favicons
+index.html               # entrada para hospedagem estática
+```
 
-Abra a pasta raiz do projeto.
+## Persistência e privacidade
 
-Clique com o botão direito no arquivo index.html e selecione "Open with Live Server".
+Os dados são armazenados em `localStorage` no próprio navegador. Nenhuma informação é enviada para servidor. Limpar os dados do site no navegador também redefine saldo, histórico e preferências.
 
-O navegador abrirá automaticamente o projeto no endereço http://127.0.0.1:5500.
+## Qualidade
 
-Método Alternativo (Node.js/Terminal):
-Caso tenha o Node.js instalado, você pode rodar na raiz do projeto:
+```bash
+find src/js -name '*.js' -print0 | xargs -0 -n1 node --check
+```
 
-# Instalar um servidor estático leve de forma global
-npm install -g serve
+O workflow de CI executa a verificação de sintaxe e confirma que as entradas da publicação existem.
 
-# Iniciar o servidor na raiz do projeto
-serve .
-📝 Próximos Passos (Roadmap)
-[ ] Implementar gráficos de linha de evolução patrimonial na Dashboard.
+## Decisões técnicas
 
-[ ] Adicionar um sistema de oscilação randômica de preços a cada X segundos simulando um mercado volátil.
+- módulos separados por responsabilidade evitam um único arquivo JavaScript monolítico;
+- `localStorage` mantém a demonstração simples e independente de backend;
+- propriedades customizadas de CSS centralizam temas e tokens visuais;
+- dados simulados deixam claro o limite entre protótipo de interface e produto financeiro.
 
-[ ] Criar aba de metas financeiras e conquistas para gamificar a experiência do investidor.
+## Próximos passos
 
-[ ] Lançar BD e sistema de logon completo.
+- testes automatizados das regras de transação;
+- gráficos de evolução da carteira;
+- importação e exportação de uma carteira de demonstração;
+- camada opcional de API para cotações reais, com aviso de atraso e fonte dos dados.
 
-Desvolvido por [[Deyverson Lima](https://github.com/DeyversonLima)]
+Projeto pessoal de [Deyverson Lima](https://github.com/DeyversonLima), criado para praticar JavaScript modular, estado no navegador e experiência de produto.

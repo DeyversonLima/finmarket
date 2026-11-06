@@ -28,11 +28,13 @@ export const initSettings = () => {
         clearBtn.addEventListener('click', () => {
             confirmModal.classList.add('active');
             confirmModal.setAttribute('aria-hidden', 'false');
+            confirmModal.removeAttribute('inert');
         });
 
         cancelClear?.addEventListener('click', () => {
             confirmModal.classList.remove('active');
             confirmModal.setAttribute('aria-hidden', 'true');
+            confirmModal.setAttribute('inert', '');
         });
 
         confirmClear?.addEventListener('click', () => {
@@ -52,6 +54,7 @@ export const initSettings = () => {
 
             confirmModal.classList.remove('active');
             confirmModal.setAttribute('aria-hidden', 'true');
+            confirmModal.setAttribute('inert', '');
             showToast('Todos os dados foram limpos');
         });
     }
