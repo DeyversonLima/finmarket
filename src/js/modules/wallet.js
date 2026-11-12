@@ -1,71 +1,53 @@
-import { PRODUCTS } from '../config/constants.js';
+import { store } from './store.js';
+import { findProduct, getPreviousQuote, getQuote } from './market.js';
 import { formatCurrency } from './utils.js';
 
-let elements = {
-    headerWallet: null,
-    heroBalance: null,
-    walletBalance: null,
-    investedBalance: null,
-    dayChange: null
-};
+export { findProduct } from './market.js';
 
-let state = null;
+export const getPortfolioSummary = (state = store.getState()) => {
+    let invested = 0;
+    let previousInvested = 0;
+    let cost = 0;
 
-export const initWalletElements = (els) => {
-    elements = { ...elements, ...els };
-};
+    Object.entries(state.portfolio).forEach(([id, position]) => {
+        const product = findProduct(id);
+        if (!product) return;
+        invested += getQuote(product) * position.quantity;
+        previousInvested += getPreviousQuote(product) * position.quantity;
+        cost += position.averagePrice * position.quantity;
+    });
 
-export const setWalletState = (appState) => {
-    state = appState;
-};
-
-export const findProduct = (id) => {
-    return [...PRODUCTS.assets, ...PRODUCTS.liabilities, ...PRODUCTS.currencies]
-        .find(p => p.id === id);
+    const dayChange = invested - previousInvested;
+    return {
+        available: state.balance,
+        invested,
+        cost,
+        total: state.balance + invested,
+        dayChange,
+        dayChangePercent: previousInvested ? dayChange / previousInvested : 0,
+        unrealizedResult: invested - cost
+    };
 };
 
 export const updateWalletDisplay = () => {
-    const totalInvested = Object.entries(state.portfolio).reduce((acc, [id, qty]) => {
-        const product = findProduct(id);
-        return acc + (product ? product.price * qty : 0);
-    }, 0);
+    const summary = getPortfolioSummary();
+    const values = {
+        headerWallet: summary.available,
+        heroBalance: summary.available,
+        walletBalance: summary.available,
+        investedBalance: summary.invested
+    };
 
-    const totalBalance = state.balance + totalInvested;
+    Object.entries(values).forEach(([id, value]) => {
+        const element = document.getElementById(id);
+        if (element) element.textContent = formatCurrency(value);
+    });
 
-    console.log('🔄 Atualizando display:', { balance: state.balance, totalInvested, totalBalance });
+    const dayChange = document.getElementById('dayChange');
+    if (dayChange) {
+        const positive = summary.dayChange >= 0;
+        dayChange.textContent = `${positive ? '+' : ''}${formatCurrency(summary.dayChange)} (${(summary.dayChangePercent * 100).toFixed(2)}%)`;
+        dayChange.className = `wallet-card-value ${positive ? 'positive' : 'negative'}`;
+    }
 
-    if (elements.headerWallet) {
-        elements.headerWallet.textContent = formatCurrency(totalBalance);
-        console.log('✅ headerWallet atualizado:', formatCurrency(totalBalance));
-    } else {
-        console.warn('⚠️ headerWallet não encontrado');
-    }
-    
-    if (elements.heroBalance) {
-        elements.heroBalance.textContent = formatCurrency(totalBalance);
-        console.log('✅ heroBalance atualizado:', formatCurrency(totalBalance));
-    } else {
-        console.warn('⚠️ heroBalance não encontrado');
-    }
-    
-    if (elements.walletBalance) {
-        elements.walletBalance.textContent = formatCurrency(state.balance);
-        console.log('✅ walletBalance atualizado:', formatCurrency(state.balance));
-    } else {
-        console.warn('⚠️ walletBalance não encontrado');
-    }
-    
-    if (elements.investedBalance) {
-        elements.investedBalance.textContent = formatCurrency(totalInvested);
-        console.log('✅ investedBalance atualizado:', formatCurrency(totalInvested));
-    } else {
-        console.warn('⚠️ investedBalance não encontrado');
-    }
-    
-    if (elements.dayChange) {
-        const change = (Math.random() * 200 - 50).toFixed(2);
-        const isPositive = change > 0;
-        elements.dayChange.textContent = `${isPositive ? '+' : ''}${formatCurrency(change)}`;
-        elements.dayChange.className = `wallet-card-value ${isPositive ? 'positive' : 'negative'}`;
-    }
 };

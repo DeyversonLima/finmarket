@@ -15,7 +15,12 @@
     <script>
         (function() {
             // Verifica se há um tema salvo, senão verifica a preferência do sistema operacional
-            const savedTheme = localStorage.getItem('finmarket-theme');
+            let savedTheme;
+            try {
+                savedTheme = JSON.parse(localStorage.getItem('finmarket:v2') || 'null')?.settings?.theme;
+            } catch {
+                savedTheme = null;
+            }
             const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
             
             const themeToApply = savedTheme || (systemPrefersDark ? 'dark' : 'light');

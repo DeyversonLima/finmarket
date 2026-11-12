@@ -1,16 +1,12 @@
-import { DataStore } from './storage.js';
+import { store } from './store.js';
 
-let elements = {
-    themeToggle: null,
-    themeToggleLarge: null
-};
-
-export const initThemeElements = (els) => {
-    elements = { ...elements, ...els };
-};
+const getElements = () => ({
+    themeToggle: document.getElementById('themeToggle'),
+    themeToggleLarge: document.getElementById('themeToggleLarge')
+});
 
 export const initTheme = () => {
-    const savedTheme = DataStore.get('theme', 'light');
+    const savedTheme = store.getState().settings.theme;
     document.documentElement.setAttribute('data-theme', savedTheme);
     updateThemeIcons(savedTheme);
 };
@@ -20,21 +16,23 @@ export const toggleTheme = () => {
     const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
 
     document.documentElement.setAttribute('data-theme', newTheme);
-    DataStore.set('theme', newTheme);
+    store.update('theme-updated', (draft) => { draft.settings.theme = newTheme; });
     updateThemeIcons(newTheme);
 
-    if (elements.themeToggleLarge) {
+    if (getElements().themeToggleLarge) {
         updateLargeThemeToggle(newTheme);
     }
 };
 
 const updateThemeIcons = (theme) => {
+    const elements = getElements();
     if (!elements.themeToggle) return;
     const isDark = theme === 'dark';
     elements.themeToggle.classList.toggle('dark', isDark);
 };
 
 const updateLargeThemeToggle = (theme) => {
+    const elements = getElements();
     if (!elements.themeToggleLarge) return;
     const options = elements.themeToggleLarge.querySelectorAll('.theme-option');
     options.forEach(opt => {
@@ -43,18 +41,19 @@ const updateLargeThemeToggle = (theme) => {
 };
 
 export const initThemeSettings = () => {
+    const elements = getElements();
     if (elements.themeToggleLarge) {
         elements.themeToggleLarge.addEventListener('click', (e) => {
             const option = e.target.closest('.theme-option');
             if (option) {
                 const theme = option.dataset.theme;
                 document.documentElement.setAttribute('data-theme', theme);
-                DataStore.set('theme', theme);
+                store.update('theme-updated', (draft) => { draft.settings.theme = theme; });
                 updateThemeIcons(theme);
                 updateLargeThemeToggle(theme);
             }
         });
 
-        updateLargeThemeToggle(DataStore.get('theme', 'light'));
+        updateLargeThemeToggle(store.getState().settings.theme);
     }
 };

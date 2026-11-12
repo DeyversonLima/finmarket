@@ -1,104 +1,73 @@
-import { INITIAL_BALANCE, PRODUCTS } from './config/constants.js';
-import { DataStore } from './modules/storage.js';
-import { formatCurrency } from './modules/utils.js';
 import { initNotifications, showToast } from './modules/notifications.js';
-import { initTheme, toggleTheme, initThemeSettings, initThemeElements } from './modules/theme.js';
-import { toggleMenu, closeMenu, initMenuListeners, initMenuElements } from './modules/menu.js';
-import { initWalletElements, setWalletState, updateWalletDisplay, findProduct } from './modules/wallet.js';
-import { setTransactionState, setRenderCallbacks, buyAsset, sellAsset } from './modules/transactions.js';
-import { setRendererState, renderProducts, renderWalletAssets, renderHistory, renderOrders } from './modules/renderer.js';
+import { initTheme, toggleTheme, initThemeSettings } from './modules/theme.js';
+import { initMenuListeners } from './modules/menu.js';
+import { updateWalletDisplay } from './modules/wallet.js';
+import { initListFilters, renderProducts, renderWalletAssets, renderHistory, renderOrders } from './modules/renderer.js';
 import { initSearch } from './modules/search.js';
-import { setProfileState, initProfileForm } from './modules/profile.js';
-import { setSettingsState, setSettingsRenderCallbacks, initSettings } from './modules/settings.js';
+import { initProfileForm, renderProfile } from './modules/profile.js';
+import { initSettings } from './modules/settings.js';
+import { cancelOrder, initTrading, processOpenOrders } from './modules/trading.js';
+import { store } from './modules/store.js';
 
 (function() {
     'use strict';
 
-    // State
-    let state = {
-        balance: DataStore.get('balance', INITIAL_BALANCE),
-        portfolio: DataStore.get('portfolio', {}),
-        transactions: DataStore.get('transactions', []),
-        orders: DataStore.get('orders', []),
-        theme: DataStore.get('theme', 'light')
-    };
+    const hideDecorativeIcons = () => document.querySelectorAll('svg').forEach((icon) => {
+        icon.setAttribute('aria-hidden', 'true');
+        icon.setAttribute('focusable', 'false');
+    });
 
-    // DOM Elements - will be populated after DOM is ready
-    let elements = {};
-
-    // Capture DOM Elements (must be called after DOM is ready)
-    const captureElements = () => {
-        elements = {
-            menuToggle: document.getElementById('menuToggle'),
-            sidebar: document.getElementById('sidebar'),
-            sidebarClose: document.getElementById('sidebarClose'),
-            menuOverlay: document.getElementById('menuOverlay'),
-            themeToggle: document.getElementById('themeToggle'),
-            themeToggleLarge: document.getElementById('themeToggleLarge'),
-            headerWallet: document.getElementById('headerWallet'),
-            heroBalance: document.getElementById('heroBalance'),
-            walletBalance: document.getElementById('walletBalance'),
-            investedBalance: document.getElementById('investedBalance'),
-            dayChange: document.getElementById('dayChange')
-        };
-    };
-
-    // Initialize Modules
-    const initModules = () => {
-        initNotifications();
-        initMenuElements(elements);
-        initThemeElements(elements);
-        initWalletElements(elements);
-
-        setWalletState(state);
-        setTransactionState(state);
-        setRendererState(state);
-        setProfileState(state);
-        setSettingsState(state);
-
-        setRenderCallbacks({
-            wallet: updateWalletDisplay,
-            assets: renderWalletAssets,
-            history: renderHistory
-        });
-
-        setSettingsRenderCallbacks({
-            wallet: updateWalletDisplay,
-            assets: renderWalletAssets,
-            history: renderHistory
-        });
-    };
-
-    // Event Listeners
-    const initEventListeners = () => {
-        initMenuListeners();
-
-        if (elements.themeToggle) {
-            elements.themeToggle.addEventListener('click', toggleTheme);
-        }
-
-        // Expose functions globally for onclick handlers
-        window.buyAsset = buyAsset;
-        window.sellAsset = sellAsset;
-        window.showToast = showToast;
+    const renderAll = () => {
+        const catalogSearch = document.querySelector('[data-search="catalog"]');
+        const searchTerm = catalogSearch?.value;
+        renderProducts();
+        if (searchTerm) catalogSearch.dispatchEvent(new Event('input'));
+        renderWalletAssets();
+        renderHistory();
+        renderOrders();
+        renderProfile();
+        updateWalletDisplay();
+        hideDecorativeIcons();
     };
 
     // Initialize
     const init = () => {
-        captureElements();
-        initModules();
+        initNotifications();
         initTheme();
-        initEventListeners();
+        initMenuListeners();
+        document.getElementById('themeToggle')?.addEventListener('click', toggleTheme);
         initSearch();
         initProfileForm();
         initSettings();
         initThemeSettings();
+        initTrading();
+        initListFilters();
+        processOpenOrders();
+        renderAll();
 
-        renderProducts();
-        renderWalletAssets();
-        renderHistory();
-        renderOrders();
-        updateWalletDisplay();
+        document.addEventListener('click', (event) => {
+            const cancelButton = event.target.closest('[data-cancel-order]');
+            if (cancelButton && cancelOrder(cancelButton.dataset.cancelOrder)) {
+                showToast('Ordem cancelada', 'info');
+            }
+            const toastButton = event.target.closest('[data-toast-message]');
+            if (toastButton) showToast(toastButton.dataset.toastMessage, 'info');
+        });
+
+        store.subscribe((_state, reason) => {
+            if (reason === 'reset' || reason === 'external-update') initTheme();
+            const catalogSearch = document.querySelector('[data-search="catalog"]');
+            const searchTerm = catalogSearch?.value;
+            renderProducts();
+            if (searchTerm) catalogSearch.dispatchEvent(new Event('input'));
+            renderWalletAssets();
+            renderHistory();
+            renderOrders();
+            updateWalletDisplay();
+            if (['profile-updated', 'reset', 'external-update'].includes(reason)) renderProfile();
+            hideDecorativeIcons();
+            if (reason === 'storage-error') showToast('Não foi possível salvar os dados', 'error');
+        });
     };
 
     // Run when DOM is ready

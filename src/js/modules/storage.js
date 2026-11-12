@@ -1,22 +1,47 @@
+const STORAGE_KEY = 'finmarket:v2';
+const LEGACY_KEYS = ['balance', 'portfolio', 'transactions', 'orders', 'theme'];
+
+const clone = (value) => JSON.parse(JSON.stringify(value));
+
 export const DataStore = {
-    get(key, defaultValue = null) {
+    key: STORAGE_KEY,
+
+    read(defaultValue) {
         try {
-            const item = localStorage.getItem(key);
-            return item ? JSON.parse(item) : defaultValue;
-        } catch (e) {
+            const value = localStorage.getItem(STORAGE_KEY);
+            return value ? JSON.parse(value) : clone(defaultValue);
+        } catch (error) {
+            console.warn('Não foi possível ler os dados do FinMarket.', error);
+            return clone(defaultValue);
+        }
+    },
+
+    write(value) {
+        try {
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(value));
+            return true;
+        } catch (error) {
+            console.error('Não foi possível salvar os dados do FinMarket.', error);
+            return false;
+        }
+    },
+
+    readLegacy(key, defaultValue = null) {
+        try {
+            const value = localStorage.getItem(key);
+            return value === null ? defaultValue : JSON.parse(value);
+        } catch {
             return defaultValue;
         }
     },
 
-    set(key, value) {
-        try {
-            localStorage.setItem(key, JSON.stringify(value));
-        } catch (e) {
-            console.error('Error saving to localStorage:', e);
-        }
+    removeLegacy() {
+        LEGACY_KEYS.forEach((key) => localStorage.removeItem(key));
+        localStorage.removeItem('finmarket-theme');
     },
 
-    remove(key) {
-        localStorage.removeItem(key);
+    clear() {
+        localStorage.removeItem(STORAGE_KEY);
+        this.removeLegacy();
     }
 };

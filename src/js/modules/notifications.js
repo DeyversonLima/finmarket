@@ -28,7 +28,8 @@ export const showToast = (message, type = 'success') => {
     toastContainer.appendChild(toast);
 
     // 3. Ativa a animação de entrada
-    requestAnimationFrame(() => {
+    const nextFrame = globalThis.requestAnimationFrame ?? ((callback) => setTimeout(callback, 0));
+    nextFrame(() => {
         toast.classList.add('show');
     });
 

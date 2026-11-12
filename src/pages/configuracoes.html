@@ -15,7 +15,12 @@
     <script>
         (function() {
             // Verifica se há um tema salvo, senão verifica a preferência do sistema operacional
-            const savedTheme = localStorage.getItem('finmarket-theme');
+            let savedTheme;
+            try {
+                savedTheme = JSON.parse(localStorage.getItem('finmarket:v2') || 'null')?.settings?.theme;
+            } catch {
+                savedTheme = null;
+            }
             const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
             
             const themeToApply = savedTheme || (systemPrefersDark ? 'dark' : 'light');
@@ -120,64 +125,21 @@
                         <p class="setting-description">Escolha entre claro ou escuro</p>
                     </div>
                     <div class="setting-control">
-                        <button class="theme-toggle-large" id="themeToggleLarge" aria-label="Alternar tema">
-                            <span class="theme-option active" data-theme="light">
+                        <div class="theme-toggle-large" id="themeToggleLarge" role="group" aria-label="Escolher tema">
+                            <button type="button" class="theme-option active" data-theme="light">
                                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                                     <circle cx="12" cy="12" r="5"/>
                                     <path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/>
                                 </svg>
                                 Claro
-                            </span>
-                            <span class="theme-option" data-theme="dark">
+                            </button>
+                            <button type="button" class="theme-option" data-theme="dark">
                                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                                     <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
                                 </svg>
                                 Escuro
-                            </span>
-                        </button>
-                    </div>
-                </div>
-            </div>
-
-            <div class="settings-section">
-                <h2 class="settings-section-title">Notificações</h2>
-                
-                <div class="setting-item">
-                    <div class="setting-info">
-                        <h3 class="setting-title">Notificações de preço</h3>
-                        <p class="setting-description">Alertas quando ativos atingirem valores específicos</p>
-                    </div>
-                    <div class="setting-control">
-                        <label class="toggle-switch">
-                            <input type="checkbox" checked>
-                            <span class="toggle-slider"></span>
-                        </label>
-                    </div>
-                </div>
-
-                <div class="setting-item">
-                    <div class="setting-info">
-                        <h3 class="setting-title">Resumo diário</h3>
-                        <p class="setting-description">Relatório diário do desempenho da carteira</p>
-                    </div>
-                    <div class="setting-control">
-                        <label class="toggle-switch">
-                            <input type="checkbox" checked>
-                            <span class="toggle-slider"></span>
-                        </label>
-                    </div>
-                </div>
-
-                <div class="setting-item">
-                    <div class="setting-info">
-                        <h3 class="setting-title">Novidades</h3>
-                        <p class="setting-description">Atualizações sobre novos ativos disponíveis</p>
-                    </div>
-                    <div class="setting-control">
-                        <label class="toggle-switch">
-                            <input type="checkbox">
-                            <span class="toggle-slider"></span>
-                        </label>
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -197,17 +159,17 @@
             </div>
 
             <div class="settings-footer">
-                <p>FinMarket v1.0.0</p>
-                <p>© <span id="currentYear">2024</span> FinMarket Inc.</p>
+                <p>FinMarket v2.0.0</p>
+                <p>© <span id="currentYear">2024</span> Projeto FinMarket</p>
             </div>
         </div>
     </main>
 
     <!-- Confirmation Modal -->
-    <div class="modal" id="confirmModal" aria-hidden="true" inert>
+    <div class="modal" id="confirmModal" role="dialog" aria-modal="true" aria-labelledby="confirmModalTitle" aria-hidden="true" inert>
         <div class="modal-overlay"></div>
         <div class="modal-content">
-            <h3 class="modal-title">Confirmar ação</h3>
+            <h3 class="modal-title" id="confirmModalTitle">Confirmar ação</h3>
             <p class="modal-text">Tem certeza que deseja limpar todos os dados? Esta ação não pode ser desfeita.</p>
             <div class="modal-actions">
                 <button class="btn-secondary" id="cancelClear">Cancelar</button>

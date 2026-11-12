@@ -15,7 +15,12 @@
     <script>
         (function() {
             // Verifica se há um tema salvo, senão verifica a preferência do sistema operacional
-            const savedTheme = localStorage.getItem('finmarket-theme');
+            let savedTheme;
+            try {
+                savedTheme = JSON.parse(localStorage.getItem('finmarket:v2') || 'null')?.settings?.theme;
+            } catch {
+                savedTheme = null;
+            }
             const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
             
             const themeToApply = savedTheme || (systemPrefersDark ? 'dark' : 'light');
@@ -116,7 +121,7 @@
                     <circle cx="11" cy="11" r="8"/>
                     <path d="M21 21l-4.35-4.35"/>
                 </svg>
-                <input type="search" class="search-input" placeholder="Buscar ajuda..." aria-label="Buscar ajuda">
+                <input type="search" class="search-input" data-search="help" placeholder="Buscar ajuda..." aria-label="Buscar ajuda">
             </div>
         </div>
 
@@ -161,8 +166,8 @@
                         <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
                     </svg>
                 </div>
-                <h3 class="help-title">É seguro investir aqui?</h3>
-                <p class="help-description">Esta é uma plataforma de demonstração. Os dados são armazenados localmente no seu navegador.</p>
+                <h3 class="help-title">Isto usa dinheiro real?</h3>
+                <p class="help-description">Não. Esta é uma simulação educacional com dados fictícios armazenados localmente no navegador.</p>
             </div>
         </div>
 
@@ -205,11 +210,10 @@
             <div class="contact-card">
                 <div class="contact-info">
                     <h3 class="contact-title">Fale conosco</h3>
-                    <p class="contact-description">Nossa equipe está disponível para ajudar com qualquer dúvida.</p>
-                    <a href="mailto:suporte@finmarket.com" class="contact-link">suporte@finmarket.com</a>
+                    <p class="contact-description">Consulte as respostas acima ou a documentação do projeto para entender a demonstração.</p>
                 </div>
                 <div class="contact-actions">
-                    <button class="btn-primary" onclick="showToast('Em breve disponível')">Iniciar Chat</button>
+                    <a class="btn-primary" href="https://github.com/DeyversonLima/finmarket" target="_blank" rel="noopener noreferrer">Ver projeto</a>
                 </div>
             </div>
         </div>

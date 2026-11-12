@@ -49,6 +49,15 @@ a {
   text-decoration: none;
 }
 
+:focus-visible {
+  outline: 3px solid color-mix(in srgb, var(--color-primary) 55%, white);
+  outline-offset: 3px;
+}
+
+[hidden] {
+  display: none !important;
+}
+
 /* ==========================================================================
    3. BOTÕES & COMPONENTES REUTILIZÁVEIS GLOBAIS
    ========================================================================== */
@@ -412,10 +421,274 @@ html[data-theme="dark"] .theme-icon-light { display: none; }
   border-left: 4px solid var(--color-primary); /* Seu azul padrão */
 }
 
+.trade-dialog {
+  position: fixed;
+  inset: 0;
+  width: min(calc(100vw - 32px), 560px);
+  max-width: none;
+  max-height: min(calc(100dvh - 32px), 760px);
+  margin: auto;
+  padding: 0;
+  border: 1px solid var(--borda);
+  border-radius: 20px;
+  color: var(--texto-principal);
+  background: var(--bg-card);
+  box-shadow: 0 24px 80px rgba(15, 23, 42, 0.28);
+  overflow: hidden auto;
+  overscroll-behavior: contain;
+}
+
+.trade-dialog::backdrop {
+  background: rgba(15, 23, 42, 0.68);
+  backdrop-filter: blur(5px);
+}
+
+.trade-form {
+  display: grid;
+  gap: 1.15rem;
+  padding: 1.75rem;
+}
+
+.trade-heading {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+}
+
+.trade-symbol {
+  display: grid;
+  flex: 0 0 46px;
+  width: 46px;
+  height: 46px;
+  place-items: center;
+  border-radius: 13px;
+  color: #fff;
+  background: linear-gradient(135deg, var(--color-primary), #60a5fa);
+  font-size: 1.05rem;
+  font-weight: 800;
+}
+
+.trade-eyebrow {
+  color: var(--texto-secundario);
+  font-size: 0.78rem;
+  font-weight: 600;
+}
+
+.trade-heading h2 {
+  font-size: 1.35rem;
+  line-height: 1.25;
+}
+
+.trade-market-summary {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1px;
+  padding: 1px;
+  border: 1px solid var(--borda);
+  border-radius: 12px;
+  background: var(--borda);
+  overflow: hidden;
+}
+
+.trade-market-summary > div {
+  display: grid;
+  gap: 0.2rem;
+  padding: 0.9rem 1rem;
+  background: var(--bg-principal);
+}
+
+.trade-market-summary span,
+.trade-estimate span {
+  color: var(--texto-secundario);
+  font-size: 0.78rem;
+}
+
+.trade-market-summary strong {
+  font-size: 0.98rem;
+}
+
+.trade-fields {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+.trade-fields label {
+  display: grid;
+  align-content: start;
+  gap: 0.4rem;
+  font-weight: 600;
+}
+
+.trade-fields label[hidden] {
+  display: none;
+}
+
+.trade-fields small {
+  color: var(--texto-secundario);
+  font-size: 0.72rem;
+  font-weight: 400;
+  line-height: 1.4;
+}
+
+.trade-form input,
+.trade-form select {
+  width: 100%;
+  min-height: 46px;
+  padding: 0.72rem 0.85rem;
+  border: 1px solid var(--borda);
+  border-radius: 10px;
+  color: var(--texto-principal);
+  background: var(--bg-principal);
+  font: inherit;
+}
+
+html[data-theme="light"] .trade-form input,
+html[data-theme="light"] .trade-form select { color-scheme: light; }
+
+html[data-theme="dark"] .trade-form input,
+html[data-theme="dark"] .trade-form select { color-scheme: dark; }
+
+.trade-form input:hover,
+.trade-form select:hover {
+  border-color: color-mix(in srgb, var(--color-primary) 45%, var(--borda));
+}
+
+.trade-form input:focus,
+.trade-form select:focus {
+  border-color: var(--color-primary);
+  outline: 3px solid color-mix(in srgb, var(--color-primary) 18%, transparent);
+}
+
+.modal-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.modal-header h2,
+.modal-header p {
+  margin: 0;
+}
+
+.modal-close {
+  display: grid;
+  flex: 0 0 40px;
+  width: 40px;
+  height: 40px;
+  place-items: center;
+  border: 0;
+  border-radius: 10px;
+  background: transparent;
+  color: var(--texto-principal);
+  font-size: 1.65rem;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.modal-close:hover {
+  background: var(--bg-principal);
+}
+
+.trade-estimate {
+  display: grid;
+  gap: 0.5rem;
+  padding: 1rem;
+  border: 1px solid var(--borda);
+  border-radius: 12px;
+  background: color-mix(in srgb, var(--color-primary) 5%, var(--bg-card));
+}
+
+.trade-estimate > div {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.trade-estimate .trade-total {
+  margin-top: 0.25rem;
+  padding-top: 0.65rem;
+  border-top: 1px solid var(--borda);
+}
+
+.trade-total strong {
+  color: var(--color-primary);
+  font-size: 1.2rem;
+}
+
+.form-error {
+  min-height: 1.4em;
+  margin: 0;
+  color: #ef4444;
+  font-size: 0.84rem;
+  font-weight: 600;
+}
+
+.trade-dialog .modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.75rem;
+}
+
+.trade-dialog .modal-actions button {
+  min-width: 140px;
+}
+
+.trade-dialog[data-side="sell"] .trade-symbol,
+.trade-dialog[data-side="sell"] #tradeSubmit {
+  background: #dc2626;
+}
+
+.trade-dialog[data-side="sell"] #tradeSubmit:hover {
+  background: #b91c1c;
+}
+
+.hero-card-change.negative,
+.negative {
+  color: #dc2626;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+  }
+}
+
 /* ==========================================================================
    AJUSTE DE RESPONSIVIDADE (Mobile)
    ========================================================================== */
 @media (max-width: 480px) {
+  .trade-dialog {
+    width: calc(100vw - 20px);
+    max-height: calc(100dvh - 20px);
+    border-radius: 16px;
+  }
+
+  .trade-form {
+    gap: 1rem;
+    padding: 1.15rem;
+  }
+
+  .trade-fields,
+  .trade-market-summary {
+    grid-template-columns: 1fr;
+  }
+
+  .trade-dialog .modal-actions {
+    display: grid;
+    grid-template-columns: 1fr 1.25fr;
+  }
+
+  .trade-dialog .modal-actions button {
+    min-width: 0;
+    padding-inline: 0.75rem;
+  }
+
   .toast-container {
     bottom: 16px;
     right: 16px;

@@ -11,7 +11,9 @@ Simulador educacional de mercado financeiro e carteira de investimentos, constru
 
 - catálogo com 30 ativos simulados;
 - busca por nome ou ticker;
-- ordens de compra e venda;
+- ordens a mercado e limitadas, com execução e cancelamento;
+- escolha de quantidade e cálculo de preço médio;
+- formulário de negociação responsivo e adaptado aos temas claro e escuro;
 - carteira e saldo atualizados após cada operação;
 - histórico de transações;
 - perfil e preferências persistidos no navegador;
@@ -33,6 +35,17 @@ Abra `http://localhost:8000`. O arquivo da raiz encaminha para a aplicação em 
 
 Também é possível abrir `src/pages/index.html` diretamente, embora um servidor local ofereça comportamento mais próximo do deploy.
 
+## Desenvolvimento e testes
+
+Use Node.js 22 ou mais recente para executar as verificações locais:
+
+```bash
+npm ci
+npm run check
+```
+
+O comando valida a sintaxe JavaScript, a estrutura HTML e os testes automatizados do estado, das cotações simuladas e do fluxo de compra.
+
 ## Estrutura
 
 ```text
@@ -40,23 +53,23 @@ src/
 ├── css/                 # estilos globais e por página
 ├── js/
 │   ├── config/          # constantes e catálogo simulado
-│   └── modules/         # carteira, transações, tema, busca e UI
+│   └── modules/         # estado, mercado, ordens, carteira, tema e UI
 ├── pages/               # telas da aplicação
 └── public/              # favicons
+test/                    # testes unitários e de integração
+scripts/                 # verificações usadas localmente e na CI
 index.html               # entrada para hospedagem estática
 ```
 
+Uma descrição do estado, dos módulos e dos fluxos principais está disponível em [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md).
+
 ## Persistência e privacidade
 
-Os dados são armazenados em `localStorage` no próprio navegador. Nenhuma informação é enviada para servidor. Limpar os dados do site no navegador também redefine saldo, histórico e preferências.
+Os dados são armazenados em um estado local versionado no `localStorage` do próprio navegador. Nenhuma informação é enviada para servidor. A aplicação valida dados persistidos, migra o formato legado e sincroniza alterações entre abas.
 
 ## Qualidade
 
-```bash
-find src/js -name '*.js' -print0 | xargs -0 -n1 node --check
-```
-
-O workflow de CI executa a verificação de sintaxe e confirma que as entradas da publicação existem.
+O workflow de CI instala as dependências de forma reproduzível e executa `npm run check` em cada push e pull request.
 
 ## Decisões técnicas
 
@@ -67,7 +80,7 @@ O workflow de CI executa a verificação de sintaxe e confirma que as entradas d
 
 ## Próximos passos
 
-- testes automatizados das regras de transação;
+- ampliar os testes de interface para todas as páginas;
 - gráficos de evolução da carteira;
 - importação e exportação de uma carteira de demonstração;
 - camada opcional de API para cotações reais, com aviso de atraso e fonte dos dados.

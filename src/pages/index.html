@@ -8,7 +8,7 @@
     <link rel="icon" type="image/x-icon" href="../public/favicon.ico" sizes="any">
     <link rel="icon" type="image/svg+xml" href="../public/favicon.svg">
     <link rel="stylesheet" href="../css/global.css">
-    <link rel="stylesheet" href="../css/index.css">
+    <link rel="stylesheet" href="../css/home.css">
     <link rel="stylesheet" href="../css/produtos.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -16,7 +16,12 @@
     <script>
         (function() {
             // Verifica se há um tema salvo, senão verifica a preferência do sistema operacional
-            const savedTheme = localStorage.getItem('finmarket-theme');
+            let savedTheme;
+            try {
+                savedTheme = JSON.parse(localStorage.getItem('finmarket:v2') || 'null')?.settings?.theme;
+            } catch {
+                savedTheme = null;
+            }
             const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
             
             const themeToApply = savedTheme || (systemPrefersDark ? 'dark' : 'light');
@@ -57,7 +62,7 @@
                         <circle cx="11" cy="11" r="8"/>
                         <path d="M21 21l-4.35-4.35"/>
                     </svg>
-                    <input type="search" class="search-input" placeholder="Buscar ativos, tickers..." aria-label="Buscar ativos">
+                    <input type="search" class="search-input" data-search="catalog" placeholder="Buscar ativos, tickers..." aria-label="Buscar ativos">
                 </div>
             </div>
 
@@ -169,7 +174,7 @@
         <section class="hero">
             <div class="hero-content">
                 <h1 class="hero-title">Mercado Financeiro<br>na sua mão</h1>
-                <p class="hero-subtitle">Negocie ativos, acompanhe seu portfólio e tome decisões inteligentes com dados em tempo real.</p>
+                <p class="hero-subtitle">Pratique operações, acompanhe uma carteira fictícia e aprenda com cotações simuladas.</p>
                 <div class="hero-actions">
                     <a href="#ativos" class="btn-primary btn-large">Explorar Ativos</a>
                     <a href="carteira.html" class="btn-secondary btn-large">Minha Carteira</a>
@@ -178,7 +183,7 @@
             <div class="hero-visual">
                 <div class="hero-card">
                     <div class="hero-card-header">
-                        <span class="hero-card-label">Saldo Total</span>
+                        <span class="hero-card-label">Saldo disponível</span>
                         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                             <path d="M7 17l9.2-9.2M17 8v9"/>
                         </svg>
@@ -186,9 +191,9 @@
                     <div class="hero-card-value" id="heroBalance">R$ 0,00</div>
                     <div class="hero-card-change positive">
                         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <path d="M7 17l5-5 5 5M12 12V3"/>
+                            <path d="M4 7h16M4 12h16M4 17h10"/>
                         </svg>
-                        <span>+12.5% este mês</span>
+                        <span>Disponível para investir</span>
                     </div>
                 </div>
             </div>
@@ -209,7 +214,7 @@
         <!-- Liabilities Catalog -->
         <section class="catalog-section">
             <div class="section-header">
-                <h2 class="section-title">Passivos &amp; Renda Fixa</h2>
+                <h2 class="section-title">Renda Fixa</h2>
                 <p class="section-description">Títulos públicos, CDBs e investimentos de baixo risco</p>
             </div>
             

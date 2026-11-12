@@ -149,6 +149,10 @@ input:checked + .toggle-slider:before {
   color: var(--texto-secundario);
   border-radius: 6px;
   transition: all 0.2s ease;
+  border: 0;
+  background: transparent;
+  font: inherit;
+  cursor: pointer;
 }
 
 .theme-option svg {

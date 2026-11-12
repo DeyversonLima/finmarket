@@ -15,7 +15,12 @@
     <script>
         (function() {
             // Verifica se há um tema salvo, senão verifica a preferência do sistema operacional
-            const savedTheme = localStorage.getItem('finmarket-theme');
+            let savedTheme;
+            try {
+                savedTheme = JSON.parse(localStorage.getItem('finmarket:v2') || 'null')?.settings?.theme;
+            } catch {
+                savedTheme = null;
+            }
             const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
             
             const themeToApply = savedTheme || (systemPrefersDark ? 'dark' : 'light');
@@ -115,12 +120,6 @@
                 <div class="profile-avatar-section">
                     <div class="profile-avatar">
                         <span id="avatarInitials">JD</span>
-                        <button class="avatar-edit" aria-label="Alterar foto">
-                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/>
-                                <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/>
-                            </svg>
-                        </button>
                     </div>
                     <h2 class="profile-name" id="profileName">João da Silva</h2>
                     <p class="profile-email" id="profileEmail">joao.silva@email.com</p>
@@ -131,28 +130,22 @@
                     <div class="form-row">
                         <div class="form-group">
                             <label class="form-label" for="firstName">Nome</label>
-                            <input type="text" class="form-input" id="firstName" value="João" placeholder="Seu nome">
+                            <input type="text" class="form-input" id="firstName" value="João" placeholder="Seu nome" autocomplete="given-name" required maxlength="60">
                         </div>
                         <div class="form-group">
                             <label class="form-label" for="lastName">Sobrenome</label>
-                            <input type="text" class="form-input" id="lastName" value="da Silva" placeholder="Seu sobrenome">
+                            <input type="text" class="form-input" id="lastName" value="da Silva" placeholder="Seu sobrenome" autocomplete="family-name" required maxlength="80">
                         </div>
                     </div>
 
                     <div class="form-group">
                         <label class="form-label" for="email">Email</label>
-                        <input type="email" class="form-input" id="email" value="joao.silva@email.com" placeholder="seu@email.com">
+                        <input type="email" class="form-input" id="email" value="joao.silva@email.com" placeholder="seu@email.com" autocomplete="email" required maxlength="120">
                     </div>
 
                     <div class="form-group">
                         <label class="form-label" for="phone">Telefone</label>
-                        <input type="tel" class="form-input" id="phone" value="(11) 98765-4321" placeholder="(00) 00000-0000">
-                    </div>
-
-                    <div class="form-group">
-                        <label class="form-label" for="cpf">CPF</label>
-                        <input type="text" class="form-input" id="cpf" value="123.456.789-00" placeholder="000.000.000-00" disabled>
-                        <span class="form-hint">Não é possível alterar o CPF</span>
+                        <input type="tel" class="form-input" id="phone" value="(11) 98765-4321" placeholder="(00) 00000-0000" autocomplete="tel" maxlength="20">
                     </div>
 
                     <div class="form-actions">
